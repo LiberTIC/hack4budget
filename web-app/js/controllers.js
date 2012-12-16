@@ -1,11 +1,35 @@
 'use strict';
 
 function BudgetCtrl($scope, $routeParams, $resource) {
-	$scope.expends = $resource('expends.json').query();
+	/* The data model */
+	$scope.incoming = 0;
+	$scope.debts = 0;
+	$scope.savings = 0;
 	$scope.categories = [];
 	$scope.modelsPerCategory = {};
 	$scope.amountsPerCategory = {};
 	$scope.amountsPerModel = {};
+	
+	$scope.currentCategory = "unknown";
+	$scope.currentModels = [];
+	
+	/* Dynamic resources */
+	$scope.expends = $resource('expends.json').query();
+	$scope.revenues = $resource('revenues.json').get();
+	
+	if ( $routeParams.topicId )
+		showCategory( $routeParams.topicId );
+		console.log(Object.keys($routeParams));
+	
+	/* Extract data from the JSON to build model */
+	var processRevenues = function () {
+		if ($scope.revenues.income)
+			$scope.incoming = $scope.revenues.income;
+		if ($scope.revenues.debts)
+			$scope.debts = $scope.revenues.debts;
+		if ($scope.revenues.savings)
+			$scope.savings = $scope.revenues.savings;
+	}
 	
 	/* Extract data from the JSON to build model */
 	var processExpends = function () {
@@ -38,54 +62,31 @@ function BudgetCtrl($scope, $routeParams, $resource) {
 		console.log("Size :" + $scope.expends.length);
 	};
 	
+	$scope.$watch('revenues', processRevenues, true);
 	$scope.$watch('expends', processExpends, true);
 	
-	$scope.test = "Test";
-	
-	$scope.revenu = {
-		"income": 100000,
-		"debts": 1000,
-		"savings": 0
+	function formatMoneyValue(amount, currency) {
+		var x1 = amount + " €";
+		var rgx = /(\d+)(\d{3})/;
+		while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+		}
+		return x1;
 	};
-/*
-		$scope.expends = {
-			"economy": {
-				"label": "Économie",
-				"icon": "img/economie.png",
-				"categories": ["Divers", "Frais de fonctionnement", "Subventions"]
-			},
-			"urbanism": {
-				"label": "Urbanisme",
-				"icon": "img/urbanisme.png",
-				"categories": ["AUTRES", "GENERAL", "IMMOBILISATION INCORPORELES", "IMMOBILISATIONS CORPORELLES", "IMMOBILISATIONS EN COURS", "IMMOBILISATIONS INCORPORELLES", "PERSONNEL", "SUBVENTIONS D'EQUIPEMENT VERSEES", "SUBVENTIONS D'INVESTISSEMENT"]
-			},
-			"social": {
-				"label": "Social",
-				"icon": "img/social.png",
-				"categories": ["Enfants / Ado", "Famille", "Global – Divers", "Global - Personnel", "Global – Subvention", "Logement", "Personnes Agées", "Santé", "Santé - Personnel"]
-			},
-			"education": {
-				"label": "Éducation",
-				"icon": "img/education.png",
-				"categories": ["autres", "communication", "fonctionnement", "fournitures", "immobilisation", "immobilisations", "personnel", "subvention"]
-			},
-			"environment": {
-				"label": "Environnement",
-				"icon": "img/environment.png",
-				"categories": ["autres", "communication", "fonctionnement", "personnel", "subvention"]
-			},
-			"culture": {
-				"label": "Culture",
-				"icon": "img/culture.png",
-				"categories": ["COMMUNICATION", "Divers", "DOCUMENTATIONS OEUVRES", "FOURNITURES", "FRAIS DE PERSONNEL", "FRAIS MOBILIERS ET IMMOBILIERS", "IMPOTS", "CREANCES", "PRESTATIONS DE SERVICES", "RECHERCHE SUBVENTIONS", "TRANSPORT DE PERSONNES ET DE BIENS"]
-			},
-			"administration": {
-				"label": "Administration",
-				"icon": "img/administratif.png",
-				"categories": ["Communication", "Dette", "Divers", "Élus", "Fiscalité", "Frais de fonctionnement", "Immobilier", "Personnel", "Subventions"]
-			}
-		};
-*/
+	
+	$scope.getCategoryAmount = function(category) {
+		return formatMoneyValue($scope.amountsPerCategory[category], "€");
+	};
+	
+	$scope.getModelAmount = function(category, model) {
+		return $scope.amountsPerModel[category + "-" + model];
+	};
+	
+	$scope.showCategory = function(category) {
+		console.log("Showing models for category '"+category+"'");
+		$scope.currentCategory = category;
+		$scope.currentModels = $scope.modelsPerCategory[category];
+	};
 }
 BudgetCtrl.$inject = ['$scope', '$routeParams', '$resource'];
 
