@@ -7,7 +7,6 @@
 require 'rubygems'
 require 'mongo'
 require 'sinatra'
-require 'sinatra/json'
 require 'json'
 
 configure do
@@ -31,7 +30,7 @@ get '/api/themes' do
   }
 
   res = CONN[DB].command(cmd)['result']
-  content_type 'application/json'
+  content_type :json
   res.to_a.to_json
 end
 
@@ -48,6 +47,8 @@ get '/api/incomes' do
   }
 
   res = CONN[DB].command(cmd)['result']
-  content_type 'application/json'
-  json({'income' => res[0]['sum'], 'debts' => 0, 'savings' => 0})
+  content_type :json
+  {:income => res[0]['sum'],
+        :debts => 0,
+        :savings => 0}.to_json
 end
