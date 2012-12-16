@@ -1,16 +1,53 @@
 'use strict';
 
-var module = angular.module('hack4budgetControllers', []);
-
-function BudgetCtrl($scope, $routeParams) {
-		$scope.test = "Test";
-		
-		$scope.revenu = {
-			"income": 100000,
-			"debts": 1000,
-			"savings": 0
-		};
+function BudgetCtrl($scope, $routeParams, $resource) {
+	$scope.expends = $resource('expends.json').query();
+	$scope.categories = [];
+	$scope.modelsPerCategory = {};
+	$scope.amountsPerCategory = {};
+	$scope.amountsPerModel = {};
 	
+	/* Extract data from the JSON to build model */
+	var processExpends = function () {
+		for(var i=0 ; i<$scope.expends.length ; i++) {
+			// Get the data
+			var category = $scope.expends[i]["_id"]["category"];
+			var model = $scope.expends[i]["_id"]["model"];
+			var amount = $scope.expends[i]["sum"];
+			if (!category) continue;
+			if (!model) continue;
+			if (!amount) continue;
+			
+			// Push data model per category
+			if ( $scope.categories.indexOf(category) < 0 )
+				$scope.categories.push(category);
+			if ( ! $scope.amountsPerCategory[category] )
+				$scope.amountsPerCategory[category] = 0;
+			$scope.amountsPerCategory[category] += amount;
+			
+			// Push data model per model
+			if ( ! $scope.modelsPerCategory[category] )
+				$scope.modelsPerCategory[category] = [];
+			$scope.modelsPerCategory[category].push(model);
+			var modelKey = category + "-" + model;
+			if ( ! $scope.amountsPerModel[modelKey] )
+				$scope.amountsPerModel[modelKey] = 0;
+			$scope.amountsPerModel[modelKey] += amount;
+		}
+		console.log("Should be loaded...");
+		console.log("Size :" + $scope.expends.length);
+	};
+	
+	$scope.$watch('expends', processExpends, true);
+	
+	$scope.test = "Test";
+	
+	$scope.revenu = {
+		"income": 100000,
+		"debts": 1000,
+		"savings": 0
+	};
+/*
 		$scope.expends = {
 			"economy": {
 				"label": "Économie",
@@ -48,8 +85,9 @@ function BudgetCtrl($scope, $routeParams) {
 				"categories": ["Communication", "Dette", "Divers", "Élus", "Fiscalité", "Frais de fonctionnement", "Immobilier", "Personnel", "Subventions"]
 			}
 		};
+*/
 }
-BudgetCtrl.$inject = ['$scope', '$routeParams'];
+BudgetCtrl.$inject = ['$scope', '$routeParams', '$resource'];
 
-modules.controller("BudgetCtrl", BudgetCtrl);
+app.controller("BudgetCtrl", BudgetCtrl);
 

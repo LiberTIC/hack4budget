@@ -1,20 +1,5 @@
-<div class="container-fluid">
-	<!-- Dépenses par thématiques -->
-	<div class="span6">
-		<ul>
-			<li ng-repeat="topic in budget.expends.topics">
-				{{topic.label}}
-				<ul>
-					<li ng-repeat="category in topic.categories">
-						{{category}}
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-	<!-- Détail des dépenses -->
-	<div class="span6">
-		Détails
-	</div>
-</div>
-
+<ul>
+	<li ng-repeat="category in categories">
+		{{category}}
+	</li>
+</ul>
