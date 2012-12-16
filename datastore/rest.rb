@@ -7,6 +7,7 @@
 require 'rubygems'
 require 'mongo'
 require 'sinatra'
+require 'sinatra/json'
 require 'json'
 
 configure do
@@ -15,7 +16,7 @@ configure do
   COLL  = 'budget_lines'
 end
 
-get '/api' do
+get '/api/themes' do
   cmd = {
   aggregate: COLL,
   pipeline: [
@@ -32,4 +33,21 @@ get '/api' do
   res = CONN[DB].command(cmd)['result']
   content_type 'application/json'
   res.to_a.to_json
+end
+
+get '/api/incomes' do
+  cmd = {
+  aggregate: COLL,
+  pipeline: [
+      {'$match' => {:montant => {'$gt' => 0}, :d_r => "R"}}, # Filter on Revenu
+      {'$group' => {
+	:_id => 'all',
+	:sum => {'$sum' => '$montant'}
+      }},
+    ]
+  }
+
+  res = CONN[DB].command(cmd)['result']
+  content_type 'application/json'
+  json({'income' => res[0]['sum'], 'debts' => 0, 'savings' => 0})
 end
