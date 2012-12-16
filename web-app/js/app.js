@@ -3,7 +3,8 @@
 var app = angular.module('hack4budget', ['ngResource'])
 	.config(['$routeProvider', function($routeProvider) {
 		$routeProvider
-		.when('/:topicId', { controller: BudgetCtrl })
-		.otherwise({redirectTo: '/SOCIAL'});
+		.when('/', { action: "default" })
+		.when('/:topicId', { action: "details" })
+		.otherwise({redirectTo: '/'});
 }]);
 

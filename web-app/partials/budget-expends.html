@@ -1,6 +1,19 @@
-<h2>Test !!!</h2>
-<ul>
-	<li ng-repeat="category in categories">
-		{{category}}
-	</li>
-</ul>
+<!-- Grandes thématiques -->
+<div class="span6">
+	<ul>
+		<li ng-repeat="category in categories">
+			<!--
+			<a href="#/{{category}}" ng-class="{ on: isCurrent('{{category}}') }">
+			-->
+			<a href="#/{{category}}">{{category}}</a>
+			{{getCategoryAmount(category)}}
+		</li>
+	</ul>
+	<div data-ng-include src="partials/budget-expends.html"></div>
+</div>
+
+<!-- Détail des dépenses -->
+<div class="span6" ng-switch on=" currentCategory ">
+	<div ng-switch-when="" ng-include="'partials/no-category.html'"></div>
+	<div ng-switch-default ng-include="'partials/details.html'"></div>
+</div>

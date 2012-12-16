@@ -1,6 +1,6 @@
 'use strict';
 
-function BudgetCtrl($scope, $routeParams, $resource) {
+function BudgetCtrl($scope, $route, $routeParams, $resource) {
 	/* The data model */
 	$scope.incoming = 0;
 	$scope.debts = 0;
@@ -10,7 +10,7 @@ function BudgetCtrl($scope, $routeParams, $resource) {
 	$scope.amountsPerCategory = {};
 	$scope.amountsPerModel = {};
 	
-	$scope.currentCategory = "unknown";
+	$scope.currentCategory = "";
 	$scope.currentModels = [];
 	
 	/* Dynamic resources */
@@ -20,6 +20,11 @@ function BudgetCtrl($scope, $routeParams, $resource) {
 	if ( $routeParams.topicId )
 		showCategory( $routeParams.topicId );
 		console.log(Object.keys($routeParams));
+	
+	/* Check if the category in parameter is the current one */
+	$scope.isCurrent = function(category) {
+		return category==$scope.currentCategory;
+	};
 	
 	/* Extract data from the JSON to build model */
 	var processRevenues = function () {
@@ -79,16 +84,27 @@ function BudgetCtrl($scope, $routeParams, $resource) {
 	};
 	
 	$scope.getModelAmount = function(category, model) {
-		return $scope.amountsPerModel[category + "-" + model];
+		return formatMoneyValue($scope.amountsPerModel[category + "-" + model], "€");
 	};
 	
-	$scope.showCategory = function(category) {
-		console.log("Showing models for category '"+category+"'");
-		$scope.currentCategory = category;
-		$scope.currentModels = $scope.modelsPerCategory[category];
+	/*
+	  Listen for changes to the Route. When the route
+	  changes, let's set the renderAction model value so
+	  that it can render in the Strong element.
+	*/
+	this.changeRoute = function($currentRoute, $previousRoute) {
+		if ( $route.current.action == "default" ) {
+			$scope.currentCategory = "";
+			$scope.currentModels = [];
+		} else {
+			$scope.currentCategory = ($routeParams.topicId || "");
+			if ( $scope.currentCategory != "" )
+				$scope.currentModels = $scope.modelsPerCategory[$scope.currentCategory];
+		}
 	};
+	$scope.$on("$routeChangeSuccess", this.changeRoute);
 }
-BudgetCtrl.$inject = ['$scope', '$routeParams', '$resource'];
+BudgetCtrl.$inject = ['$scope', '$route', '$routeParams', '$resource'];
 
 app.controller("BudgetCtrl", BudgetCtrl);
 

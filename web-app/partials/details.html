@@ -1,0 +1,6 @@
+<h3>Détails pour {{currentCategory}}</h3>
+<ul>
+	<li ng-repeat="model in currentModels">
+		{{model}} : {{getModelAmount(currentCategory, model)}}
+	</li>
+</ul>

@@ -19,29 +19,7 @@
 	</div>
 	<!-- Dépenses -->
 	<div class="row-fluid">
-		<!-- Grandes thématiques -->
-		<div class="span6">
-			<ul>
-				<li ng-repeat="category in categories">
-					<a ng-click="showCategory('{{category}}')">
-						{{category}}
-					</a>
-					{{getCategoryAmount(category)}}
-				</li>
-			</ul>
-			<div data-ng-include src="partials/budget-expends.html"></div>
-		</div>
-		<!-- Détail des dépenses -->
-		<div class="span6">
-			<h3>{{currentCategory}}</h3>
-			<ul>
-				<li ng-repeat="model in currentModels">
-					{{model}} : {{getAmount(currentCategory, model)}}
-				</li>
-			</ul>
-			<div data-ng-include src="partials/budget-expends.html"></div>
-			Détails
-		</div>
+		<div data-ng-include data-src="'partials/budget-expends.html'"></div>
 	</div>
 	<!-- Scripts -->
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
