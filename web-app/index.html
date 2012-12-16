@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8" />
+	<!-- AngularJS -->
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+	<script src="js/ng-budget.js"></script>
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<script src="js/bootstrap.min.js"></script>
+</head>
+<body ng-app ng-controller="BudgetCtrl">
+	<p>Test : {{4+4}}</p>
+	<p>{{test}}</p>
+	<!-- Budget disponible -->
+	<div class="row-fluid">
+		<div class="container-fluid">
+			Budget à dépenser :
+			<span class="value">{{revenu.income}}</span>
+			Dettes :
+			<span class="value">{{revenu.debts}}</span>
+			Économies :
+			<span class="value">{{revenu.savings}}</span>
+		</div>
+	</div>
+	<!-- Dépenses -->
+	<div class="row-fluid">
+		<!-- Grandes thématiques -->
+		<div class="span6">
+			<div class="container-fluid">
+				<ul>
+					<li ng-repeat="topic in expends.keys()">
+						{{expends[topic].label}}
+						<ul>
+							<li ng-repeat="category in expends[topic].categories">
+								{{category}}
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- Détail des dépenses -->
+		<div class="span6">
+			Détails
+		</div>
+	</div>
+	<!-- Scripts -->
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+</body>
+</html>
