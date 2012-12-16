@@ -13,24 +13,45 @@
 	<script src="js/bootstrap.min.js"></script>
 </head>
 <body ng-controller="BudgetCtrl">
-	<p>Test : {{4+4}}</p>
-	<p>{{test}}</p>
-	<p>{{expends}}</p>
 	<!-- Budget disponible -->
 	<div class="row-fluid">
 		<div data-ng-include data-src="'partials/budget-revenue.html'"></div>
+		<div class="span3">
+			Dettes :
+			<span class="value">{{debts}}</span>
+		</div>
+		<div class="span6">
+			Budget à dépenser :
+			<span class="value">{{incoming}}</span>
+		</div>
+		<div class="span3">
+			Économies :
+			<span class="value">{{savings}}</span>
+		</div>
 	</div>
 	<!-- Dépenses -->
 	<div class="row-fluid">
 		<!-- Grandes thématiques -->
 		<div class="span6">
-		<li ng-repeat="category in categories">
-		{{category}}
-	</li>
+			<ul>
+				<li ng-repeat="category in categories">
+					<a ng-click="showCategory('{{category}}')">
+						{{category}}
+					</a>
+					{{getCategoryAmount(category)}}
+				</li>
+			</ul>
 			<div data-ng-include src="partials/budget-expends.html"></div>
 		</div>
 		<!-- Détail des dépenses -->
 		<div class="span6">
+			<h3>{{currentCategory}}</h3>
+			<ul>
+				<li ng-repeat="model in currentModels">
+					{{model}} : {{getAmount(currentCategory, model)}}
+				</li>
+			</ul>
+			<div data-ng-include src="partials/budget-expends.html"></div>
 			Détails
 		</div>
 	</div>
