@@ -1,0 +1,19 @@
+.gaugepic {
+  position: absolute;
+}
+
+.gaugeeffect {
+  -webkit-filter: blur(2px) brightness(0.3);
+  -moz-filter: blur(2px) brightness(0.3);
+  -ms-filter: blur(2px) brightness(0.3);
+}
+.gaugecontainer {
+  -webkit-filter: drop-shadow(15px 15px 20px black) sepia(0.5);
+  -moz-filter: drop-shadow(15px 15px 20px black) sepia(0.5);
+  -ms-filter: drop-shadow(15px 15px 20px black) sepia(0.5);
+}
+.gaugecontainer:hover {
+  -webkit-filter: drop-shadow(15px 15px 20px black) sepia(0);
+  -moz-filter: drop-shadow(15px 15px 20px black) sepia(0);
+  -ms-filter: drop-shadow(15px 15px 20px black) sepia(0);
+}

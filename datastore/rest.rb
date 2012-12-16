@@ -15,10 +15,6 @@ configure do
   COLL  = 'budget_lines'
 end
 
-get '/' do
-  send_file 'public/index.html'
-end
-
 get '/api' do
   cmd = {
   aggregate: COLL,
@@ -34,5 +30,6 @@ get '/api' do
   }
 
   res = CONN[DB].command(cmd)['result']
+  content_type 'application/json'
   res.to_a.to_json
 end

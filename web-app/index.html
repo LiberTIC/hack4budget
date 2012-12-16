@@ -9,6 +9,7 @@
 	<script src="js/controllers.js"></script>
 	<!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="css/budget.css" rel="stylesheet" media="screen">
 	<script src="js/bootstrap.min.js"></script>
 </head>
 <body ng-controller="BudgetCtrl">
@@ -17,14 +18,7 @@
 	<p>{{expends}}</p>
 	<!-- Budget disponible -->
 	<div class="row-fluid">
-		<div class="container-fluid">
-			Budget à dépenser :
-			<span class="value">{{revenu.income}}</span>
-			Dettes :
-			<span class="value">{{revenu.debts}}</span>
-			Économies :
-			<span class="value">{{revenu.savings}}</span>
-		</div>
+		<div data-ng-include data-src="'partials/budget-revenue.html'"></div>
 	</div>
 	<!-- Dépenses -->
 	<div class="row-fluid">
