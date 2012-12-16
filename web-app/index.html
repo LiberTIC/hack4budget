@@ -1,15 +1,17 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" ng-app="hack4budget">
 <head>
 	<meta charset="utf-8" />
 	<!-- AngularJS -->
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
-	<script src="js/ng-budget.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/controllers.js"></script>
+	<script src="js/services.js"></script>
 	<!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<script src="js/bootstrap.min.js"></script>
 </head>
-<body ng-app ng-controller="BudgetCtrl">
+<body ng-controller="BudgetCtrl">
 	<p>Test : {{4+4}}</p>
 	<p>{{test}}</p>
 	<!-- Budget disponible -->
