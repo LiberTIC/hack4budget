@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 
+# Sample aggregate (by thematique) for budget_lines
+#
+# Author: Damien Raude-Morvan <drazzib@drazzib.com>
+
 require 'rubygems'
 require 'mongo'
 
@@ -13,10 +17,11 @@ cmd = {
   pipeline: [
     {'$match' => {:montant => {'$gt' => 0}, :d_r => "D"}}, # Filter on 'D'epenses
     {'$group' => {
-      :_id => {thematique: '$thematique'}, # , modele: '$modele'
+      :_id => {thematique: '$thematique', modele: '$modele'},
       :ecount => {'$sum' => 1},
       :esum => {'$sum' => '$montant'}
-    }}
+    }},
+    {'$sort' => {'_id.thematique' => -1, '_id.modele' => -1}}
   ]
 }
 

@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 
+# Import all budget CSV file into mongodb database.
+#
+# Author: Damien Raude-Morvan <drazzib@drazzib.com>
+
 require 'mongo_mapper'
 require 'csv'
 load 'class/BudgetLine.rb'

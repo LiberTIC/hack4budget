@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
 
+# After "import_budget_mongo.rb", alter each line in database to declare
+# mapping with thematique + modele
+#
+# Author: Damien Raude-Morvan <drazzib@drazzib.com>
+
 require 'mongo_mapper'
 require 'csv'
 load 'class/BudgetLine.rb'
@@ -7,18 +12,21 @@ load 'class/ConfigurationMappingArticles.rb'
 
 MongoMapper.database = 'hack4'
 configDir = '/home/draudemorvan/Dropbox/hackathon/thematiques/'
-configs = ['SOCIAL.csv', 'ADMINISTRATIF.csv', 'URBANISME.csv', 'ENVIRONNEMENT.csv', 'EDUCATION.csv', 'CULTURE.csv']
+configs = ['ADMINISTRATIF.csv', 'CULTURE.csv', 'ECONOMIE.csv', 'EDUCATION.csv', 'ENVIRONNEMENT.csv', 'SOCIAL.csv', 'URBANISME.csv']
 allMappings = []
 
 for file in configs
   puts "Reading #{file} configuration"
+  importedItem = 0
   CSV.foreach(configDir + file,
 		:headers => true,
 		:quote_char	=> '"',
 		:col_sep	=>',',
                 :converters	=> :numeric) do |row|
 	allMappings << ConfigMappingArticles.new(row[0], row[1], row[2], row[3], row[4])
+	importedItem += 1;
   end
+  puts "Imported #{importedItem} items"
 end
 # Display all mappings
 puts "#{allMappings.length} configurations from CSV"
