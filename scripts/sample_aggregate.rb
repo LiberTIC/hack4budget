@@ -9,7 +9,7 @@ $LOAD_PATH.unshift(classdir) unless $LOAD_PATH.include?(classdir)
 
 require 'mongo_mapper'
 
-MongoMapper.setup({'production' => {'uri' => ENV['MONGOHQ_URL']}}, 'production')
+MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
 
 cmd = {
   aggregate: 'budget_lines',

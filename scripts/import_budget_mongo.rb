@@ -11,7 +11,7 @@ require 'mongo_mapper'
 require 'csv'
 require 'BudgetLine'
 
-MongoMapper.setup({'production' => {'uri' => ENV['MONGOHQ_URL']}}, 'production')
+MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
 
 dataFile = '/home/draudemorvan/incoming/BP_2011_VDN_csv/BP_2011_VDN.csv'
 

@@ -13,7 +13,7 @@ require 'json'
 require 'mongo_mapper'
 
 configure do
-	MongoMapper.setup({'production' => {'uri' => ENV['MONGOHQ_URL']}}, 'production')
+	MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
 	COLL  = 'budget_lines'
 end
 

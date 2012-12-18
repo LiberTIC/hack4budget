@@ -13,7 +13,7 @@ require 'csv'
 require 'BudgetLine'
 require 'ConfigurationMappingArticles'
 
-MongoMapper.setup({'production' => {'uri' => ENV['MONGOHQ_URL']}}, 'production')
+MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
 
 configDir = '/home/draudemorvan/Dropbox/hackathon/thematiques/'
 configs = ['ADMINISTRATIF.csv', 'CULTURE.csv', 'ECONOMIE.csv', 'EDUCATION.csv', 'ENVIRONNEMENT.csv', 'SOCIAL.csv', 'URBANISME.csv']
