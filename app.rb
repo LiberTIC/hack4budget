@@ -13,7 +13,11 @@ require 'mongo'
 require 'mongo_mapper'
 
 configure do
-	MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
+	db = "mongodb://localhost/hack4budget"
+	if ENV['OPENSHIFT_MONGODB_DB_URL']
+		db = "#{ENV['OPENSHIFT_MONGODB_DB_URL']}hack4budget"
+	end
+	MongoMapper.setup({'production' => {'uri' => db}}, 'production')
 	COLL  = 'budget_lines'
 end
 

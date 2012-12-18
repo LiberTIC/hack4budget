@@ -12,7 +12,11 @@ require 'mongo_mapper'
 require 'csv'
 require 'BudgetLine'
 
-MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
+db = "mongodb://localhost/hack4budget"
+if ENV['OPENSHIFT_MONGODB_DB_URL']
+	db = "#{ENV['OPENSHIFT_MONGODB_DB_URL']}hack4budget"
+end
+MongoMapper.setup({'production' => {'uri' => db}}, 'production')
 
 dataFile = 'data/BP_2011_VDN.csv'
 

@@ -10,7 +10,11 @@ $LOAD_PATH.unshift(classdir) unless $LOAD_PATH.include?(classdir)
 require 'mongo'
 require 'mongo_mapper'
 
-MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
+db = "mongodb://localhost/hack4budget"
+if ENV['OPENSHIFT_MONGODB_DB_URL']
+	db = "#{ENV['OPENSHIFT_MONGODB_DB_URL']}hack4budget"
+end
+MongoMapper.setup({'production' => {'uri' => db}}, 'production')
 
 cmd = {
   aggregate: 'budget_lines',

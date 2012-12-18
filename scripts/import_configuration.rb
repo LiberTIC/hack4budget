@@ -14,7 +14,11 @@ require 'csv'
 require 'BudgetLine'
 require 'ConfigurationMappingArticles'
 
-MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
+db = "mongodb://localhost/hack4budget"
+if ENV['OPENSHIFT_MONGODB_DB_URL']
+	db = "#{ENV['OPENSHIFT_MONGODB_DB_URL']}hack4budget"
+end
+MongoMapper.setup({'production' => {'uri' => db}}, 'production')
 
 configDir = 'data/'
 configs = ['ADMINISTRATIF.csv', 'CULTURE.csv', 'ECONOMIE.csv', 'EDUCATION.csv', 'ENVIRONNEMENT.csv', 'SOCIAL.csv', 'URBANISME.csv']
