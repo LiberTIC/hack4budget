@@ -4,11 +4,15 @@
 #
 # Author: Damien Raude-Morvan <drazzib@drazzib.com>
 
+classdir = File.expand_path(File.join(File.dirname(__FILE__), "../class"))
+$LOAD_PATH.unshift(classdir) unless $LOAD_PATH.include?(classdir)
+
 require 'mongo_mapper'
 require 'csv'
-load 'class/BudgetLine.rb'
+require 'BudgetLine'
 
-MongoMapper.database = 'hack4'
+MongoMapper.setup({'production' => {'uri' => ENV['MONGOHQ_URL']}}, 'production')
+
 dataFile = '/home/draudemorvan/incoming/BP_2011_VDN_csv/BP_2011_VDN.csv'
 
 puts "Remove everything"

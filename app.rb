@@ -4,15 +4,22 @@
 #
 # Author: Damien Raude-Morvan <drazzib@drazzib.com>
 
-require 'rubygems'
+classdir = File.expand_path(File.join(File.dirname(__FILE__), "class"))
+$LOAD_PATH.unshift(classdir) unless $LOAD_PATH.include?(classdir)
+
 require 'mongo'
 require 'sinatra'
 require 'json'
+require 'mongo_mapper'
 
 configure do
-  CONN  = Mongo::Connection.new
-  DB    = 'hack4'
-  COLL  = 'budget_lines'
+	set :public_folder, 'web-app'
+	MongoMapper.setup({'production' => {'uri' => ENV['MONGOHQ_URL']}}, 'production')
+	COLL  = 'budget_lines'
+end
+
+get "/" do
+  redirect '/index.html'
 end
 
 get '/api/themes' do
@@ -29,7 +36,7 @@ get '/api/themes' do
     ]
   }
 
-  res = CONN[DB].command(cmd)['result']
+  res = MongoMapper.database.command(cmd)['result']
   content_type :json
   res.to_a.to_json
 end
@@ -40,15 +47,19 @@ get '/api/incomes' do
   pipeline: [
       {'$match' => {:montant => {'$gt' => 0}, :d_r => "R"}}, # Filter on Revenu
       {'$group' => {
-	:_id => 'all',
+	:_id => nil,
 	:sum => {'$sum' => '$montant'}
       }},
     ]
   }
 
-  res = CONN[DB].command(cmd)['result']
+  res = MongoMapper.database.command(cmd)['result']
   content_type :json
-  {:income => res[0]['sum'],
+  sum = 0
+  if res and res[0]
+	  sum = res[0]['sum']
+  end
+  {:income => sum,
         :debts => 0,
         :savings => 0}.to_json
 end

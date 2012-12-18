@@ -5,13 +5,12 @@
 #
 # Author: Damien Raude-Morvan <drazzib@drazzib.com>
 
-require 'rubygems'
-require 'mongo'
+classdir = File.expand_path(File.join(File.dirname(__FILE__), "../class"))
+$LOAD_PATH.unshift(classdir) unless $LOAD_PATH.include?(classdir)
 
-include Mongo
+require 'mongo_mapper'
 
-@client = MongoClient.new('localhost', 27017)
-@db     = @client['hack4']
+MongoMapper.setup({'production' => {'uri' => ENV['MONGOHQ_URL']}}, 'production')
 
 cmd = {
   aggregate: 'budget_lines',
@@ -22,7 +21,7 @@ cmd = {
   ]
 }
 
-result = @db.command(cmd)['result']
+result = MongoMapper.database.command(cmd)['result']
 for item in result
   if item['_id'] and item['_id']['thematique'] and item['_id']['modele']
     puts item['_id']['thematique'] + "," + item['_id']['modele']

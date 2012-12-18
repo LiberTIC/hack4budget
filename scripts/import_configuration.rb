@@ -5,12 +5,16 @@
 #
 # Author: Damien Raude-Morvan <drazzib@drazzib.com>
 
+classdir = File.expand_path(File.join(File.dirname(__FILE__), "../class"))
+$LOAD_PATH.unshift(classdir) unless $LOAD_PATH.include?(classdir)
+
 require 'mongo_mapper'
 require 'csv'
-load 'class/BudgetLine.rb'
-load 'class/ConfigurationMappingArticles.rb'
+require 'BudgetLine'
+require 'ConfigurationMappingArticles'
 
-MongoMapper.database = 'hack4'
+MongoMapper.setup({'production' => {'uri' => ENV['MONGOHQ_URL']}}, 'production')
+
 configDir = '/home/draudemorvan/Dropbox/hackathon/thematiques/'
 configs = ['ADMINISTRATIF.csv', 'CULTURE.csv', 'ECONOMIE.csv', 'EDUCATION.csv', 'ENVIRONNEMENT.csv', 'SOCIAL.csv', 'URBANISME.csv']
 allMappings = []
