@@ -1,14 +1,14 @@
 <div class="span3">
 	Dettes :
-	<span class="value">{{debts}}</span>
+	<span class="value">{{formatMoneyValue(debts)}}</span>
 </div>
 <div class="span6">
 	Budget à dépenser :
-	<span class="value">{{incoming}}</span>
+	<span class="value">{{formatMoneyValue(incoming)}}</span>
 </div>
 <div class="span3">
 	Économies :
-	<span class="value">{{savings}}</span>
+	<span class="value">{{formatMoneyValue(savings)}}</span>
 	<span class="gaugecontainer">
 		<img src="/img/money.png" class="gaugepic" style="clip: rect(130px, 338px, 348px, 0px)">
 		<img src="/img/money.png" class="gaugepic gaugeeffect" style="clip: rect(0px, 338px, 130px, 0px);">

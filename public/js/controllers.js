@@ -67,7 +67,7 @@ function BudgetCtrl($scope, $route, $routeParams, $resource) {
 	$scope.$watch('revenues', processRevenues, true);
 	$scope.$watch('expends', processExpends, true);
 	
-	function formatMoneyValue(amount, currency) {
+	$scope.formatMoneyValue = function(amount) {
 		var x1 = amount + " €";
 		var rgx = /(\d+)(\d{3})/;
 		while (rgx.test(x1)) {
@@ -77,11 +77,11 @@ function BudgetCtrl($scope, $route, $routeParams, $resource) {
 	};
 	
 	$scope.getCategoryAmount = function(category) {
-		return formatMoneyValue($scope.amountsPerCategory[category], "€");
+		return $scope.formatMoneyValue($scope.amountsPerCategory[category]);
 	};
 	
 	$scope.getModelAmount = function(category, model) {
-		return formatMoneyValue($scope.amountsPerModel[category + "-" + model], "€");
+		return $scope.formatMoneyValue($scope.amountsPerModel[category + "-" + model]);
 	};
 	
 	/*
