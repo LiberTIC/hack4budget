@@ -15,7 +15,7 @@ require 'ConfigurationMappingArticles'
 
 MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
 
-configDir = '/home/draudemorvan/Dropbox/hackathon/thematiques/'
+configDir = 'data/'
 configs = ['ADMINISTRATIF.csv', 'CULTURE.csv', 'ECONOMIE.csv', 'EDUCATION.csv', 'ENVIRONNEMENT.csv', 'SOCIAL.csv', 'URBANISME.csv']
 allMappings = []
 

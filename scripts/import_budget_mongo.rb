@@ -13,7 +13,7 @@ require 'BudgetLine'
 
 MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
 
-dataFile = '/home/draudemorvan/incoming/BP_2011_VDN_csv/BP_2011_VDN.csv'
+dataFile = 'data/BP_2011_VDN.csv'
 
 puts "Remove everything"
 BudgetLine.all.each { |s| s.destroy }
