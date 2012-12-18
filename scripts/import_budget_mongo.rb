@@ -7,6 +7,7 @@
 classdir = File.expand_path(File.join(File.dirname(__FILE__), "../class"))
 $LOAD_PATH.unshift(classdir) unless $LOAD_PATH.include?(classdir)
 
+require 'mongo'
 require 'mongo_mapper'
 require 'csv'
 require 'BudgetLine'
