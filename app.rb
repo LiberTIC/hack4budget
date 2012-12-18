@@ -13,7 +13,6 @@ require 'json'
 require 'mongo_mapper'
 
 configure do
-	set :public_folder, 'web-app'
 	MongoMapper.setup({'production' => {'uri' => ENV['MONGOHQ_URL']}}, 'production')
 	COLL  = 'budget_lines'
 end
