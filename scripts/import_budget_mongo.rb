@@ -12,9 +12,9 @@ require 'mongo_mapper'
 require 'csv'
 require 'BudgetLine'
 
-db = "mongodb://localhost/hack4budget"
+db = "mongodb://localhost/hackbudget"
 if ENV['OPENSHIFT_MONGODB_DB_URL']
-	db = "#{ENV['OPENSHIFT_MONGODB_DB_URL']}hack4budget"
+	db = "#{ENV['OPENSHIFT_MONGODB_DB_URL']}hackbudget"
 end
 MongoMapper.setup({'production' => {'uri' => db}}, 'production')
 
