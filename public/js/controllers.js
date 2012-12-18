@@ -14,12 +14,11 @@ function BudgetCtrl($scope, $route, $routeParams, $resource) {
 	$scope.currentModels = [];
 	
 	/* Dynamic resources */
-	$scope.expends = $resource('expends.json').query();
-	$scope.revenues = $resource('revenues.json').get();
+	$scope.expends = $resource('/api/themes').query();
+	$scope.revenues = $resource('/api/incomes').get();
 	
 	if ( $routeParams.topicId )
 		showCategory( $routeParams.topicId );
-		console.log(Object.keys($routeParams));
 	
 	/* Check if the category in parameter is the current one */
 	$scope.isCurrent = function(category) {
@@ -63,8 +62,6 @@ function BudgetCtrl($scope, $route, $routeParams, $resource) {
 				$scope.amountsPerModel[modelKey] = 0;
 			$scope.amountsPerModel[modelKey] += amount;
 		}
-		console.log("Should be loaded...");
-		console.log("Size :" + $scope.expends.length);
 	};
 	
 	$scope.$watch('revenues', processRevenues, true);
