@@ -5,6 +5,6 @@
 
 (
 cd $OPENSHIFT_REPO_DIR
-./scripts/import_budget_mongo.rb
-./scripts/import_configuration.rb
+bundle exec ./scripts/import_budget_mongo.rb
+bundle exec ./scripts/import_configuration.rb
 )
