@@ -1,16 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr" ng-app="hack4budget">
 <head>
+	<title>Hack4Budget</title>
 	<meta charset="utf-8" />
-	<!-- AngularJS -->
-	<script src="js/angular.min.js"></script>
-	<script src="js/angular-resource.min.js"></script>
-	<script src="js/app.js"></script>
-	<script src="js/controllers.js"></script>
-	<!-- Bootstrap -->
-	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/budget.css" rel="stylesheet" media="screen">
-	<script src="js/bootstrap.min.js"></script>
 </head>
 <body ng-controller="BudgetCtrl">
 	<!-- Budget disponible -->
@@ -21,7 +15,13 @@
 	<div class="row-fluid">
 		<div data-ng-include data-src="'partials/budget-expends.html'"></div>
 	</div>
-	<!-- Scripts -->
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	
+	<!-- JS -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-resource.min.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/controllers.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js">
 </body>
 </html>
